@@ -8,7 +8,7 @@
 | -------- | ----------- |
 | Java     | MySQL       |
 
-This service provides an API for storing orders. Data is stored in MySQL.
+This service provides an API for storing orders. Data is stored in MYSQL.
 
 ## Configuration
 
