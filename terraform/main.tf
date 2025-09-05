@@ -1,6 +1,7 @@
 #VPC 
  module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
+  version = "~> 5.0"
 
   name = "${var.cluster_name}-vpc"
   cidr = var.vpc_cidr
@@ -21,12 +22,13 @@
   enable_dns_support   = true
 
 # Manage default resources
-  manage_default_route_table = true
-  default_network_acl_tags = "${var.cluster_name}-default-nacl"
+  
   manage_default_network_acl = true
-  default_route_table_tags = "${var.cluster_name}-default-rt"
+  default_network_acl_tags = { Name = "${var.cluster_name}-default-nacl"}
+  manage_default_route_table = true
+  default_route_table_tags = { Name = "${var.cluster_name}-default-rt"}
   manage_default_security_group = true
-  default_security_group_tags = "${var.cluster_name}-default-sg"
+  default_security_group_tags = { Name = "${var.cluster_name}-default-sg"}
 
 # Kubernetes subnet tags
   private_subnet_tags = merge(local.common_tags, local.private_subnets_tags)
@@ -39,6 +41,7 @@
 
  module "retail_app_eks" {
   source = "terraform-aws-modules/eks/aws"
+  version = "~> 20.31"
 
   cluster_name = local.cluster_name
   cluster_version = var.kubernetes_version
@@ -48,9 +51,9 @@
 
   enable_cluster_creator_admin_permissions = true
 
-  cluster_compute_config = {
-    enabled = true
-    node_pools = ["gerneral-purpose"]
+    cluster_compute_config = {
+    enabled    = true
+    node_pools = ["general-purpose"]
   }
 
   vpc_id = module.vpc.vpc_id
