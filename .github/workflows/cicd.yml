@@ -184,6 +184,7 @@ jobs:
           
           git config --local user.email "lodhisaurabh9125@gmail.com"
           git config --local user.name "Sourabh9125"
+          git remote set-url origin https://github.com/Sourabh9125/retail-store-sample-app
           
           if ! git diff --quiet "src/${SERVICE}/chart/values.yaml"; then
             git add "src/${SERVICE}/chart/values.yaml"
